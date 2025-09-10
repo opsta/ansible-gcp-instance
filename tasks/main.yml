@@ -1,0 +1,34 @@
+---
+- name: Create GCP instance
+  google.cloud.gcp_compute_instance:
+    name: "{{ gcp_instance_name }}"
+    machine_type: "{{ gcp_instance_machine_type }}"
+    labels: "{{ gcp_instance_labels }}"
+    disks:
+      - auto_delete: true
+        boot: true
+        initialize_params:
+          source_image: "{{ gcp_instance_disk_image }}"
+          disk_size_gb: "{{ gcp_instance_disk_size_gb }}"
+    network_interfaces:
+      - access_configs:
+          - name: External NAT
+            type: ONE_TO_ONE_NAT
+    metadata:
+      ssh-keys: |
+        {{ gcp_instance_ssh_username }}:{{ gcp_instance_ssh_public_key }}
+    zone: "{{ gcp_instance_zone }}"
+    project: "{{ gcp_instance_project }}"
+    auth_kind: serviceaccount
+    state: present
+  register: gcp_instance_info
+
+- name: Wait until instance can be ssh
+  ansible.builtin.command: >-
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -n
+    {{ gcp_instance_ssh_username }}@{{ gcp_instance_info.networkInterfaces[0].accessConfigs[0].natIP }} /bin/true
+  register: gcp_instance_ssh_result
+  changed_when: false
+  retries: 10
+  delay: 5
+  until: gcp_instance_ssh_result.rc == 0

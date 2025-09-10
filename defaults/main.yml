@@ -1,0 +1,12 @@
+---
+gcp_instance_name: instance
+gcp_instance_project: changeme
+gcp_instance_machine_type: e2-micro
+gcp_instance_zone: asia-southeast1-a
+gcp_instance_disk_image: projects/ubuntu-os-cloud/global/images/family/ubuntu-2404-lts-amd64
+gcp_instance_disk_size_gb: 10
+gcp_instance_ssh_username: ubuntu
+gcp_instance_ssh_public_key: |
+  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFaOUT2ObdEjcZQj+VWTaU0nW9damcQ1rLpC025B2ixG ubuntu@aap-demo
+gcp_instance_labels:
+  group: "{{ gcp_instance_name }}"

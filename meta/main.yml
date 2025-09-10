@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: Opsta
+  description: Ansible role to create and config GCP instance
+  company: "Opsta (Thailand) Co.,Ltd."
+  license: "MIT"
+  min_ansible_version: "2.18"
+  galaxy_tags:
+    - gcp
+    - instance
+dependencies: []
