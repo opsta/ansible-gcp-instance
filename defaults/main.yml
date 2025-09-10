@@ -10,4 +10,4 @@ gcp_instance_ssh_public_key: |
   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFaOUT2ObdEjcZQj+VWTaU0nW9damcQ1rLpC025B2ixG ubuntu@aap-demo
 gcp_instance_labels:
   group: "{{ gcp_instance_name }}"
-  os_family: Debian
+  os_family: debian
