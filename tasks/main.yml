@@ -25,8 +25,7 @@
 
 - name: Wait until instance can be ssh
   ansible.builtin.command: >-
-    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -n
-    {{ gcp_instance_ssh_username }}@{{ gcp_instance_info.networkInterfaces[0].accessConfigs[0].natIP }} /bin/true
+    ssh-keyscan -T 3 {{ gcp_instance_info.networkInterfaces[0].accessConfigs[0].natIP }} >/dev/null 2>&1
   register: gcp_instance_ssh_result
   changed_when: false
   retries: 10
